@@ -1,3 +1,6 @@
 .vs/
-git add .gitignore
-git commit -m "Add .vs to gitignore"
+bin/
+obj/
+*.user
+appsettings.json
+appsettings.Development.json
