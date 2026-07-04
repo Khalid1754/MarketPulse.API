@@ -11,12 +11,12 @@ namespace MarketPulse.API.Services
         public NewsService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiKey = configuration["ApiKeys:NewsApi"]!;
+            _apiKey = configuration["ApiKeys:GNews"]!;
         }
 
         public async Task<List<NewsArticle>> GetNewsAsync(string query)
         {
-            var url = $"https://newsapi.org/v2/everything?q={query}&sortBy=publishedAt&pageSize=10&apiKey={_apiKey}";
+            var url = $"https://gnews.io/api/v4/search?q={query}&lang=en&max=10&apikey={_apiKey}";
             var response = await _httpClient.GetStringAsync(url);
             var json = JsonDocument.Parse(response);
 
@@ -70,7 +70,6 @@ namespace MarketPulse.API.Services
             if (total == 0) return ("Neutral", 0.5);
 
             var score = (double)positiveCount / total;
-
             var sentiment = score > 0.6 ? "Positive" : score < 0.4 ? "Negative" : "Neutral";
             return (sentiment, score);
         }

@@ -29,13 +29,14 @@ namespace MarketPulse.API.Services
             return new StockQuote
             {
                 Symbol = quote.GetProperty("01. symbol").GetString() ?? symbol,
-                Price = decimal.Parse(quote.GetProperty("05. price").GetString() ?? "0"),
-                Change = decimal.Parse(quote.GetProperty("09. change").GetString() ?? "0"),
+                Price = decimal.Parse(quote.GetProperty("05. price").GetString() ?? "0", System.Globalization.CultureInfo.InvariantCulture),
+                Change = decimal.Parse(quote.GetProperty("09. change").GetString() ?? "0", System.Globalization.CultureInfo.InvariantCulture),
                 ChangePercent = decimal.Parse(
-                    (quote.GetProperty("10. change percent").GetString() ?? "0%").Replace("%", "")),
-                High = decimal.Parse(quote.GetProperty("03. high").GetString() ?? "0"),
-                Low = decimal.Parse(quote.GetProperty("04. low").GetString() ?? "0"),
-                Volume = long.Parse(quote.GetProperty("06. volume").GetString() ?? "0"),
+        (quote.GetProperty("10. change percent").GetString() ?? "0%").Replace("%", ""),
+        System.Globalization.CultureInfo.InvariantCulture),
+                High = decimal.Parse(quote.GetProperty("03. high").GetString() ?? "0", System.Globalization.CultureInfo.InvariantCulture),
+                Low = decimal.Parse(quote.GetProperty("04. low").GetString() ?? "0", System.Globalization.CultureInfo.InvariantCulture),
+                Volume = long.Parse(quote.GetProperty("06. volume").GetString() ?? "0", System.Globalization.CultureInfo.InvariantCulture),
                 LastUpdated = DateTime.UtcNow
             };
         }
@@ -57,11 +58,11 @@ namespace MarketPulse.API.Services
                 result.Add(new StockQuote
                 {
                     Symbol = symbol,
-                    Price = decimal.Parse(data.GetProperty("4. close").GetString() ?? "0"),
-                    High = decimal.Parse(data.GetProperty("2. high").GetString() ?? "0"),
-                    Low = decimal.Parse(data.GetProperty("3. low").GetString() ?? "0"),
-                    Volume = long.Parse(data.GetProperty("5. volume").GetString() ?? "0"),
-                    LastUpdated = DateTime.Parse(day.Name)
+                    Price = decimal.Parse(data.GetProperty("4. close").GetString() ?? "0", System.Globalization.CultureInfo.InvariantCulture),
+                    High = decimal.Parse(data.GetProperty("2. high").GetString() ?? "0", System.Globalization.CultureInfo.InvariantCulture),
+                    Low = decimal.Parse(data.GetProperty("3. low").GetString() ?? "0", System.Globalization.CultureInfo.InvariantCulture),
+                    Volume = long.Parse(data.GetProperty("5. volume").GetString() ?? "0", System.Globalization.CultureInfo.InvariantCulture),
+                    LastUpdated = DateTime.Parse(day.Name, System.Globalization.CultureInfo.InvariantCulture)
                 });
             }
 
