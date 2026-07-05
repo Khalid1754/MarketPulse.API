@@ -26,15 +26,15 @@ namespace MarketPulse.API.Services
             var coin = coins[0];
             return new CryptoQuote
             {
-                Id = coin.GetProperty("id").GetString() ?? coinId,
+                Id = coin.GetProperty("id").GetString() ?? "",
                 Symbol = coin.GetProperty("symbol").GetString() ?? "",
                 Name = coin.GetProperty("name").GetString() ?? "",
-                CurrentPrice = coin.GetProperty("current_price").GetDecimal(),
-                PriceChangePercent24h = coin.GetProperty("price_change_percentage_24h").GetDecimal(),
-                MarketCap = coin.GetProperty("market_cap").GetDecimal(),
-                TotalVolume = coin.GetProperty("total_volume").GetDecimal(),
-                High24h = coin.GetProperty("high_24h").GetDecimal(),
-                Low24h = coin.GetProperty("low_24h").GetDecimal()
+                CurrentPrice = coin.TryGetProperty("current_price", out var cp) && cp.ValueKind != JsonValueKind.Null ? cp.GetDecimal() : 0,
+                PriceChangePercent24h = coin.TryGetProperty("price_change_percentage_24h", out var pcp) && pcp.ValueKind != JsonValueKind.Null ? pcp.GetDecimal() : 0,
+                MarketCap = coin.TryGetProperty("market_cap", out var mc) && mc.ValueKind != JsonValueKind.Null ? mc.GetDecimal() : 0,
+                TotalVolume = coin.TryGetProperty("total_volume", out var tv) && tv.ValueKind != JsonValueKind.Null ? tv.GetDecimal() : 0,
+                High24h = coin.TryGetProperty("high_24h", out var h) && h.ValueKind != JsonValueKind.Null ? h.GetDecimal() : 0,
+                Low24h = coin.TryGetProperty("low_24h", out var l) && l.ValueKind != JsonValueKind.Null ? l.GetDecimal() : 0
             };
         }
 
@@ -52,12 +52,12 @@ namespace MarketPulse.API.Services
                     Id = coin.GetProperty("id").GetString() ?? "",
                     Symbol = coin.GetProperty("symbol").GetString() ?? "",
                     Name = coin.GetProperty("name").GetString() ?? "",
-                    CurrentPrice = coin.GetProperty("current_price").GetDecimal(),
-                    PriceChangePercent24h = coin.GetProperty("price_change_percentage_24h").GetDecimal(),
-                    MarketCap = coin.GetProperty("market_cap").GetDecimal(),
-                    TotalVolume = coin.GetProperty("total_volume").GetDecimal(),
-                    High24h = coin.GetProperty("high_24h").GetDecimal(),
-                    Low24h = coin.GetProperty("low_24h").GetDecimal()
+                    CurrentPrice = coin.TryGetProperty("current_price", out var cp) && cp.ValueKind != JsonValueKind.Null ? cp.GetDecimal() : 0,
+                    PriceChangePercent24h = coin.TryGetProperty("price_change_percentage_24h", out var pcp) && pcp.ValueKind != JsonValueKind.Null ? pcp.GetDecimal() : 0,
+                    MarketCap = coin.TryGetProperty("market_cap", out var mc) && mc.ValueKind != JsonValueKind.Null ? mc.GetDecimal() : 0,
+                    TotalVolume = coin.TryGetProperty("total_volume", out var tv) && tv.ValueKind != JsonValueKind.Null ? tv.GetDecimal() : 0,
+                    High24h = coin.TryGetProperty("high_24h", out var h) && h.ValueKind != JsonValueKind.Null ? h.GetDecimal() : 0,
+                    Low24h = coin.TryGetProperty("low_24h", out var l) && l.ValueKind != JsonValueKind.Null ? l.GetDecimal() : 0
                 });
             }
             return result;
